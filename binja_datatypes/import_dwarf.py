@@ -78,7 +78,6 @@ class DwarfImporter:
         type_library = binaryninja.TypeLibrary.new(arch, name)
         type_library.add_platform(self.base_binaryview.platform)
         type_library.add_alternate_name(filename)
-        type_library.add_alternate_name("curl")
 
         # Now copy over the types
         for name, type in self.base_binaryview.types.items():
