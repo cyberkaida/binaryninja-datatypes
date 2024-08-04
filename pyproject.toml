@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "binaryninja-datatypes"
+authors = [
+    {name="サイバーカイダ (cyberkaida)"},
+]
+version = "0.1.0"
+description = "Type library creator for BinaryNinja"
+readme = "README.md"
+keywords = ["binaryninja", "malware", "reverse-engineering"]
+dependencies = [
+]
+
+[project.scripts]
+binaryninja-datatypes = "binja_datatypes.import_dwarf:main"
+binja-dwarf = "binja_datatypes.import_dwarf:main"
