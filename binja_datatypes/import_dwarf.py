@@ -40,13 +40,17 @@ class DwarfImporter:
         )
 
     def __init__(self, base_file: Optional[Path] = None, dwarf_file: Optional[Path] = None, type_archive: Optional[Path] = None):
-        self.base_file = base_file or Path(bv.file.filename) # If we do not have a base file, get the current one!
+        if base_file:
+            self.base_file = base_file
+        else:
+            self.base_file = Path(bv.file.filename) # If we do not have a base file, get the current one!
+
         if not self.base_file:
             raise ValueError("No base file provided and no file open in BinaryNinja")
         self.logger = base_logger.getChild(f"DwarfImporter[{self.base_file.name}]")
 
-        self.dwarf_file = dwarf_file or self._find_dwarf_file(base_file)
-        self.type_archive = type_archive or base_file.with_suffix(".bntl")
+        self.dwarf_file = dwarf_file or self._find_dwarf_file(self.base_file)
+        self.type_archive = type_archive or self.base_file.with_suffix(".bntl")
 
     def _find_dwarf_file(self, base_file: Path) -> Path:
         dsym_path = Path(f"{base_file}.dSYM")
@@ -106,7 +110,8 @@ def main():
 
     args = parser.parse_args()
 
-    if args.type_library.suffix != ".bntl":
+
+    if args.type_library and args.type_library.suffix != ".bntl":
         parser.error("TYPE_ARCHIVE must have a .bntl extension.")
 
     importer = DwarfImporter(args.BASE_FILE, args.dwarf_file, args.type_library)

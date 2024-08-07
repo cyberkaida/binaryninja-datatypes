@@ -14,8 +14,9 @@ keywords = ["binaryninja", "malware", "reverse-engineering"]
 dependencies = [
 ]
 
-[project.packages]
+[tool.setuptools.packages.find]
 include = ["binja_datatypes"]
+exclude = ["bntls", "libraries"]
 
 [project.scripts]
 binaryninja-datatypes = "binja_datatypes.import_dwarf:main"

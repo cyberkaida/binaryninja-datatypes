@@ -2,3 +2,5 @@
 build/
 .mypy_cache
 *.egg-info
+*.bntl
+.DS_Store
